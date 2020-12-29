@@ -13,32 +13,52 @@ public abstract class Account {
     protected String customerID;
 
     //setters getters
-    public double getAmount(){ return amount; }
-    public void setAmount( double _amount ){ this.amount = _amount; }
-    public void setSuspect(boolean flag){ this.suspect = flag; }
-    public boolean getSuspect(){ return suspect; }
-    public void setCustomerID( Customer customer ){
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double _amount) {
+        this.amount = _amount;
+    }
+
+    public boolean getSuspect() {
+        return suspect;
+    }
+
+    public void setSuspect(boolean flag) {
+        this.suspect = flag;
+    }
+
+    public String getCustomerID() {
+        return this.customerID;
+    }
+
+    public void setCustomerID(Customer customer) {
         this.customerID = customer.getID();
     }
-    public void setCustomerID( String _ID ){
+
+    public void setCustomerID(String _ID) {
         this.customerID = _ID;
     }
-    public String getCustomerID(){ return this.customerID;}
 
     //capabilities
-    public void transit( Account bankAccount, int value ) throws MyException{
-        if( suspect == true && value > 10_000 ){
-            throw new MyException("Suspect. Try again with <= 10000 amount"); }
-        this.debit( value );
-        bankAccount.topUp( value );
+    public void transit(Account bankAccount, int value) throws MyException {
+        if (suspect == true && value > 10_000) {
+            throw new MyException("Suspect. Try again with <= 10000 amount");
+        }
+        this.debit(value);
+        bankAccount.topUp(value);
     }
-    abstract public void debit( double x ) throws MyException;
-    abstract public void topUp( double x );
-    public void nextDay( double everyYearBonus ){
+
+    abstract public void debit(double x) throws MyException;
+
+    abstract public void topUp(double x);
+
+    public void nextDay(double everyYearBonus) {
         double everyDayBonus = everyYearBonus / 365;
         amountThatTopUpInTheEndOfTheMonth += this.getAmount() * (1 + everyDayBonus);
-        if( daysAfterClear == 31 ){
-            this.topUp( amountThatTopUpInTheEndOfTheMonth );
+        if (daysAfterClear == 31) {
+            this.topUp(amountThatTopUpInTheEndOfTheMonth);
             daysAfterClear = 0;
             amountThatTopUpInTheEndOfTheMonth = 0;
             return;

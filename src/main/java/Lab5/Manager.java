@@ -18,7 +18,7 @@ public class Manager {
     }
 
     //getters setters
-        //date
+    //date
     public static Date getDate() {
         return TimeMachine.today;
     }
@@ -79,8 +79,9 @@ public class Manager {
         return temp;
     }
 
-    public Account createAccount(Customer customer, Bank bank, Account_Type type, double amount, String date) {
+    public Account createAccount(Customer customer, Bank bank, Account_Type type, double amount, Date date) {
         return bank.createAccount(customer, type, amount, date);
     }
 
+//    public void deleteSuspectTransit()
 }

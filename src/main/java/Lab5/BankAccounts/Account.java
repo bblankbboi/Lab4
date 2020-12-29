@@ -1,6 +1,5 @@
 package Lab5.BankAccounts;
 
-import Lab5.Customer;
 import Lab5.Exceptions.MyException;
 
 public abstract class Account {
@@ -8,9 +7,9 @@ public abstract class Account {
     protected double amount = 0;
     protected boolean suspect = false;
     protected String ID;
-    protected int daysAfterClear = 0;
-    protected int amountThatTopUpInTheEndOfTheMonth = 0;
-    protected String customerID;
+    protected int daysBonus = 0;
+    protected int amountOfBonus = 0;
+    public String customerID;
 
     //setters getters
     public double getAmount() {
@@ -29,40 +28,28 @@ public abstract class Account {
         this.suspect = flag;
     }
 
-    public String getCustomerID() {
-        return this.customerID;
-    }
-
-    public void setCustomerID(Customer customer) {
-        this.customerID = customer.getID();
-    }
-
-    public void setCustomerID(String _ID) {
-        this.customerID = _ID;
-    }
-
     //capabilities
     public void transit(Account bankAccount, int value) throws MyException {
-        if (suspect == true && value > 10_000) {
+        if (this.suspect == true && value > 10_000) {
             throw new MyException("Suspect. Try again with <= 10000 amount");
         }
-        this.debit(value);
-        bankAccount.topUp(value);
+        this.getCash(value);
+        bankAccount.addMoney(value);
     }
 
-    abstract public void debit(double x) throws MyException;
+    abstract public void getCash(double x) throws MyException;
 
-    abstract public void topUp(double x);
+    abstract public void addMoney(double x);
 
     public void nextDay(double everyYearBonus) {
         double everyDayBonus = everyYearBonus / 365;
-        amountThatTopUpInTheEndOfTheMonth += this.getAmount() * (1 + everyDayBonus);
-        if (daysAfterClear == 31) {
-            this.topUp(amountThatTopUpInTheEndOfTheMonth);
-            daysAfterClear = 0;
-            amountThatTopUpInTheEndOfTheMonth = 0;
+        amountOfBonus += this.getAmount() * (1 + everyDayBonus);
+        if (daysBonus == 31) {
+            this.addMoney(amountOfBonus);
+            daysBonus = 0;
+            amountOfBonus = 0;
             return;
         }
-        daysAfterClear++;
+        daysBonus++;
     }
 }

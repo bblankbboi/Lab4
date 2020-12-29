@@ -34,7 +34,7 @@ public class Deposit extends Account {
             }
             this.work = true;
             double temp = this.getAmount() * (1 + bonus);
-            this.topUp(temp);
+            this.addMoney(temp);
         }
         super.nextDay(everyYearBonus);
     }
@@ -45,11 +45,11 @@ public class Deposit extends Account {
         if (!this.work) {
             throw new MyException("Deposit account not working yet.");
         }
-        this.debit(value);
-        bankAccount.topUp(value);
+        this.getCash(value);
+        bankAccount.addMoney(value);
     }
 
-    public void debit(double x) throws MyException {
+    public void getCash(double x) throws MyException {
         if (!this.work) {
             throw new MyException("Deposit account not working yet.");
         }
@@ -60,7 +60,7 @@ public class Deposit extends Account {
         this.setAmount(temp);
     }
 
-    public void topUp(double x) {
+    public void addMoney(double x) {
         double temp = this.getAmount() + x;
         this.setAmount(temp);
     }

@@ -61,27 +61,18 @@ public class Bank {
         this.customers.addAll(_customers);
     }
 
-    //yearbonus
-    public double getYearBonus() {
-        return yearBonus;
-    }
-
-    public void setYearBonus(double _yearBonus) {
-        this.yearBonus = _yearBonus;
-    }
-
     //main
     public Account createAccount(Customer customer, Account_Type type, double amount, Date _date) {
         Account a;
         switch (type) {
             case DEBET:
-                a = new Debet(amount, customer.getID(), customer.isSuspect());
+                a = new Debet(amount, customer.ID, customer.isSuspect());
                 break;
             case CREDIT:
-                a = new Credit(MINUS_LIMIT, MINUS_TAX, amount, customer.getID(), customer.isSuspect());
+                a = new Credit(MINUS_LIMIT, MINUS_TAX, amount, customer.ID, customer.isSuspect());
                 break;
             case DEPOSIT:
-                a = new Deposit(_date, amount, customer.getID(), customer.isSuspect());
+                a = new Deposit(_date, amount, customer.ID, customer.isSuspect());
                 break;
             default:
                 throw new RuntimeException();
@@ -99,14 +90,14 @@ public class Bank {
         this.susTransit(from, to, amount);
     }
 
-    public void topUp(Account to, double amount) {
-        to.topUp(amount);
+    public void addMoney(Account to, double amount) {
+        to.addMoney(amount);
         this.susTransit(null, to, amount);
     }
 
-    public void debit(Account from, double amount) {
+    public void getCash(Account from, double amount) {
         try {
-            from.debit(amount);
+            from.getCash(amount);
         } catch (MyException e) {
             System.out.println(e.getMessage());
             return;

@@ -13,7 +13,7 @@ public class Debet extends Account {
     }
 
     //capabilities
-    public void debit(double x) throws MyException {
+    public void getCash(double x) throws MyException {
         double temp = this.getAmount() - x;
         if (temp < 0) {
             throw new MyException("Enough money.");
@@ -21,7 +21,7 @@ public class Debet extends Account {
         this.setAmount(temp);
     }
 
-    public void topUp(double x) {
+    public void addMoney(double x) {
         double temp = this.getAmount() + x;
         this.setAmount(temp);
     }

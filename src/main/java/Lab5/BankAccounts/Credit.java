@@ -28,7 +28,7 @@ public class Credit extends Account {
     }
 
     //capabilities
-    public void debit(double x) throws MyException {
+    public void getCash(double x) throws MyException {
         double temp = this.getAmount() - x - tax(x);
         if (temp < MINUS_LIMIT) {
             throw new MyException("Enought money.");
@@ -36,7 +36,7 @@ public class Credit extends Account {
         this.setAmount(temp);
     }
 
-    public void topUp(double x) {
+    public void addMoney(double x) {
         double temp = this.getAmount() + x - tax(x);
         this.setAmount(temp);
     }

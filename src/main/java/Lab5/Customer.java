@@ -9,7 +9,7 @@ public class Customer {
     private String surname;
     private String address = null;
     private Integer passportID = null;
-    private String ID;
+    public String ID;
 
     public Customer(String _name, String _surname) {
         this.name = _name;
@@ -17,13 +17,7 @@ public class Customer {
         this.ID = UUID.randomUUID().toString();
     }
 
-    public String getAddress() throws MyException {
-        if (this.address == null) {
-            throw new MyException("Doesn't have a address");
-        }
-        return this.address;
-    }
-
+    //stuff
     public boolean isSuspect() {
         if (this.address == null && this.passportID == null) {
             return true;
@@ -35,13 +29,6 @@ public class Customer {
     //address
     public void setAddress(String _address) {
         this.address = _address;
-    }
-
-    public int getPassportID() throws MyException {
-        if (this.passportID == null) {
-            throw new MyException("Doesn't have a passport");
-        }
-        return this.passportID;
     }
 
     //passport
@@ -56,15 +43,6 @@ public class Customer {
 
     public String getSurname() {
         return this.surname;
-    }
-
-    //ID
-    public String getID() {
-        return this.ID;
-    }
-
-    public void setID(String _ID) {
-        this.ID = _ID;
     }
 
 }

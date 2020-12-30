@@ -1,7 +1,5 @@
 package Lab5;
 
-import Lab5.Exceptions.MyException;
-
 import java.util.UUID;
 
 public class Customer {

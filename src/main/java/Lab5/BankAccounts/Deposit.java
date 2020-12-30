@@ -1,6 +1,7 @@
 package Lab5.BankAccounts;
 
-import Lab5.Exceptions.MyException;
+import Lab5.Exceptions.DepositNotDateException;
+import Lab5.Exceptions.EnoughMoneyException;
 import Lab5.Manager;
 
 import java.util.Date;
@@ -41,21 +42,21 @@ public class Deposit extends Account {
 
     //capabilities
     @Override
-    public void transit(Account bankAccount, int value) throws MyException {
+    public void transit(Account bankAccount, int value) throws DepositNotDateException, EnoughMoneyException {
         if (!this.work) {
-            throw new MyException("Deposit account not working yet.");
+            throw new DepositNotDateException();
         }
         this.getCash(value);
         bankAccount.addMoney(value);
     }
 
-    public void getCash(double x) throws MyException {
+    public void getCash(double x) throws EnoughMoneyException, DepositNotDateException {
         if (!this.work) {
-            throw new MyException("Deposit account not working yet.");
+            throw new DepositNotDateException();
         }
         double temp = this.getAmount() - x;
         if (temp < 0) {
-            throw new MyException("Enough money.");
+            throw new EnoughMoneyException();
         }
         this.setAmount(temp);
     }

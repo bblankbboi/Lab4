@@ -2,6 +2,7 @@ package Lab5;
 
 import Lab5.BankAccounts.Account;
 import Lab5.BankAccounts.Account_Type;
+import Lab5.Exceptions.EnoughMoneyException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class Manager {
     public void nextDay() {
         for (Bank b : banks) {
             for (Account a : b.getAccounts()) {
-                a.nextDay(b.getYearBonus());
+                a.nextDay(b.yearBonus);
             }
         }
     }
@@ -83,5 +84,19 @@ public class Manager {
         return bank.createAccount(customer, type, amount, date);
     }
 
-//    public void deleteSuspectTransit()
+    public void transit(Bank bank1, Account acc1, Bank bank2, Account acc2, int amount) throws EnoughMoneyException {
+        bank1.getCash(acc1, amount);
+    }
+
+    public void deleteSuspectTransit(SuspectTransit s) {
+        for (Bank b : banks) {
+            if (b.sus.remove(s)) {
+                break;
+            }
+        }
+    }
+
+    public void cancelTransit(SuspectTransit s) {
+
+    }
 }

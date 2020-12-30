@@ -1,7 +1,5 @@
 package Lab5.BankAccounts;
 
-import Lab5.Exceptions.MyException;
-
 import java.util.UUID;
 
 public class Credit extends Account {

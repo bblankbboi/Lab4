@@ -1,15 +1,17 @@
 package Lab5.BankAccounts;
 
-import Lab5.Exceptions.MyException;
+import Lab5.Exceptions.DepositNotDateException;
+import Lab5.Exceptions.EnoughMoneyException;
+import Lab5.Exceptions.SuspectLimitException;
 
 public abstract class Account {
+    public String customerID;
     //fields
     protected double amount = 0;
     protected boolean suspect = false;
     protected String ID;
     protected int daysBonus = 0;
     protected int amountOfBonus = 0;
-    public String customerID;
 
     //setters getters
     public double getAmount() {
@@ -29,15 +31,15 @@ public abstract class Account {
     }
 
     //capabilities
-    public void transit(Account bankAccount, int value) throws MyException {
+    public void transit(Account bankAccount, int value) throws SuspectLimitException, EnoughMoneyException, DepositNotDateException {
         if (this.suspect == true && value > 10_000) {
-            throw new MyException("Suspect. Try again with <= 10000 amount");
+            throw new SuspectLimitException();
         }
         this.getCash(value);
         bankAccount.addMoney(value);
     }
 
-    abstract public void getCash(double x) throws MyException;
+    abstract public void getCash(double x) throws EnoughMoneyException, DepositNotDateException;
 
     abstract public void addMoney(double x);
 

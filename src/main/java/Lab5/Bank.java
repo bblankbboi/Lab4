@@ -1,7 +1,8 @@
 package Lab5;
 
 import Lab5.BankAccounts.*;
-import Lab5.Exceptions.MyException;
+import Lab5.Exceptions.EnoughMoneyException;
+import Lab5.Exceptions.SuspectLimitException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,16 +11,15 @@ import java.util.List;
 public class Bank {
     private final int MINUS_LIMIT;
     private final int MINUS_TAX;
-    //fields
     private List<Account> accounts = new ArrayList<>();
     private List<Customer> customers = new ArrayList<>();
-    private List<SuspectTransit> sus = new ArrayList<>();
+    public List<SuspectTransit> sus = new ArrayList<>();
     private String name;
-    private double yearBonus;
+    public double yearBonus;
 
 
     public Bank(String _name, int _MINUS_LIMIT, int _MINUS_TAX) {
-        this.setName(_name);
+        this.name = _name;
         this.MINUS_LIMIT = _MINUS_LIMIT;
         this.MINUS_TAX = _MINUS_TAX;
     }
@@ -29,16 +29,6 @@ public class Bank {
         if (from.getSuspect()) {
             sus.add(new SuspectTransit(from, to, amount));
         }
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    //getters setters
-    //name
-    public void setName(String _name) {
-        this.name = _name;
     }
 
     //accounts
@@ -81,12 +71,8 @@ public class Bank {
         return a;
     }
 
-    public void transit(Account from, Account to, int amount) {
-        try {
-            from.transit(to, amount);
-        } catch (MyException e) {
-            System.out.println(e.getMessage());
-        }
+    public void transit(Account from, Account to, int amount) throws SuspectLimitException, EnoughMoneyException {
+        from.transit(to, amount);
         this.susTransit(from, to, amount);
     }
 
@@ -95,13 +81,8 @@ public class Bank {
         this.susTransit(null, to, amount);
     }
 
-    public void getCash(Account from, double amount) {
-        try {
-            from.getCash(amount);
-        } catch (MyException e) {
-            System.out.println(e.getMessage());
-            return;
-        }
+    public void getCash(Account from, double amount) throws EnoughMoneyException {
+        from.getCash(amount);
         this.susTransit(from, null, amount);
     }
 }

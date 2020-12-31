@@ -1,6 +1,7 @@
 package Lab5;
 
 import Lab5.BankAccounts.*;
+import Lab5.Exceptions.DepositNotDateException;
 import Lab5.Exceptions.EnoughMoneyException;
 import Lab5.Exceptions.SuspectLimitException;
 
@@ -11,11 +12,11 @@ import java.util.List;
 public class Bank {
     private final int MINUS_LIMIT;
     private final int MINUS_TAX;
+    public List<SuspectTransit> sus = new ArrayList<>();
+    public double yearBonus;
     private List<Account> accounts = new ArrayList<>();
     private List<Customer> customers = new ArrayList<>();
-    public List<SuspectTransit> sus = new ArrayList<>();
     private String name;
-    public double yearBonus;
 
 
     public Bank(String _name, int _MINUS_LIMIT, int _MINUS_TAX) {
@@ -71,7 +72,7 @@ public class Bank {
         return a;
     }
 
-    public void transit(Account from, Account to, int amount) throws SuspectLimitException, EnoughMoneyException {
+    public void transit(Account from, Account to, int amount) throws SuspectLimitException, EnoughMoneyException, DepositNotDateException {
         from.transit(to, amount);
         this.susTransit(from, to, amount);
     }
@@ -81,7 +82,7 @@ public class Bank {
         this.susTransit(null, to, amount);
     }
 
-    public void getCash(Account from, double amount) throws EnoughMoneyException {
+    public void getCash(Account from, double amount) throws EnoughMoneyException, DepositNotDateException {
         from.getCash(amount);
         this.susTransit(from, null, amount);
     }

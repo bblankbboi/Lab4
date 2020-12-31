@@ -2,6 +2,7 @@ package Lab5;
 
 import Lab5.BankAccounts.Account;
 import Lab5.BankAccounts.Account_Type;
+import Lab5.Exceptions.DepositNotDateException;
 import Lab5.Exceptions.EnoughMoneyException;
 
 import java.text.SimpleDateFormat;
@@ -84,8 +85,9 @@ public class Manager {
         return bank.createAccount(customer, type, amount, date);
     }
 
-    public void transit(Bank bank1, Account acc1, Bank bank2, Account acc2, int amount) throws EnoughMoneyException {
+    public void transit(Bank bank1, Account acc1, Bank bank2, Account acc2, int amount) throws EnoughMoneyException, DepositNotDateException {
         bank1.getCash(acc1, amount);
+        bank2.addMoney(acc2, amount);
     }
 
     public void deleteSuspectTransit(SuspectTransit s) {
@@ -96,7 +98,8 @@ public class Manager {
         }
     }
 
-    public void cancelTransit(SuspectTransit s) {
-
+    public void cancelTransit(SuspectTransit s) throws DepositNotDateException, EnoughMoneyException {
+        s.cancel();
+        this.deleteSuspectTransit(s);
     }
 }
